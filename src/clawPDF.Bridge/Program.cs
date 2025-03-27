@@ -76,9 +76,9 @@ namespace clawPDF.Bridge
                             break;
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
-                    showUsage = true;
+                    Console.WriteLine(ex);
                     Environment.ExitCode = 1;
                 }
             }
