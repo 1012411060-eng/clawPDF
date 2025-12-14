@@ -25,6 +25,8 @@ namespace clawSoft.clawPDF.ViewModels
 
         public bool PrinterTabIsEnabled => true;
 
+        public bool UiEmailButtonTabIsEnabled => true;
+
         protected virtual void OnSettingsChanged(EventArgs e)
         {
             RaisePropertyChanged(nameof(ApplicationSettings));
@@ -39,6 +41,7 @@ namespace clawSoft.clawPDF.ViewModels
             RaisePropertyChanged(nameof(TitleTabIsEnabled));
             RaisePropertyChanged(nameof(DebugTabIsEnabled));
             RaisePropertyChanged(nameof(PrinterTabIsEnabled));
+            RaisePropertyChanged(nameof(UiEmailButtonTabIsEnabled));
         }
     }
 }

@@ -45,6 +45,8 @@ namespace clawSoft.clawPDF.Core.Settings
 
         public UpdateInterval UpdateInterval { get; set; }
 
+        public UiEmailButtonSettings UiEmailButton { get; set; }
+
         private void Init()
         {
             ApiAccess = new List<ApiAccess>();
@@ -58,6 +60,7 @@ namespace clawSoft.clawPDF.Core.Settings
             Theme = Theme.System;
             PrimaryPrinter = "clawPDF";
             UpdateInterval = UpdateInterval.Weekly;
+            UiEmailButton = new UiEmailButtonSettings();
         }
 
         public void ReadValues(Data data, string path)
@@ -178,6 +181,20 @@ namespace clawSoft.clawPDF.Core.Settings
             {
                 UpdateInterval = UpdateInterval.Weekly;
             }
+
+            // Custom Code starts here
+            // START_CUSTOM_SECTION:READ
+            try
+            {
+                UiEmailButton = new UiEmailButtonSettings();
+                UiEmailButton.ReadValues(data, @"" + path + @"UiEmailButton\\");
+            }
+            catch
+            {
+                UiEmailButton = new UiEmailButtonSettings();
+            }
+            // END_CUSTOM_SECTION:READ
+            // Custom Code ends here. Do not edit below
         }
 
         public void StoreValues(Data data, string path)
@@ -214,6 +231,15 @@ namespace clawSoft.clawPDF.Core.Settings
             data.SetValue(@"" + path + @"Theme", Theme.ToString());
             data.SetValue(@"" + path + @"PrimaryPrinter", Data.EscapeString(PrimaryPrinter));
             data.SetValue(@"" + path + @"UpdateInterval", UpdateInterval.ToString());
+
+            // Custom Code starts here
+            // START_CUSTOM_SECTION:STORE
+            if (UiEmailButton == null)
+                UiEmailButton = new UiEmailButtonSettings();
+
+            UiEmailButton.StoreValues(data, @"" + path + @"UiEmailButton\\");
+            // END_CUSTOM_SECTION:STORE
+            // Custom Code ends here. Do not edit below
         }
 
         public ApplicationSettings Copy()
@@ -237,6 +263,7 @@ namespace clawSoft.clawPDF.Core.Settings
             copy.Theme = Theme;
             copy.PrimaryPrinter = PrimaryPrinter;
             copy.UpdateInterval = UpdateInterval;
+            copy.UiEmailButton = UiEmailButton != null ? UiEmailButton.Copy() : new UiEmailButtonSettings();
 
             return copy;
         }
@@ -269,6 +296,9 @@ namespace clawSoft.clawPDF.Core.Settings
             if (!LoggingLevel.Equals(v.LoggingLevel)) return false;
             if (!PrimaryPrinter.Equals(v.PrimaryPrinter)) return false;
             if (!UpdateInterval.Equals(v.UpdateInterval)) return false;
+            if (UiEmailButton == null && v.UiEmailButton != null) return false;
+            if (UiEmailButton != null && v.UiEmailButton == null) return false;
+            if (UiEmailButton != null && !UiEmailButton.Equals(v.UiEmailButton)) return false;
 
             return true;
         }
@@ -291,6 +321,8 @@ namespace clawSoft.clawPDF.Core.Settings
             sb.AppendLine("Theme=" + Theme);
             sb.AppendLine("PrimaryPrinter=" + PrimaryPrinter);
             sb.AppendLine("UpdateInterval=" + UpdateInterval);
+            if (UiEmailButton != null)
+                sb.AppendLine("UiEmailButton=" + UiEmailButton);
 
             return sb.ToString();
         }

@@ -216,6 +216,7 @@
     <Compile Include="ViewModels\UserControls\DebugTabViewModel.cs" />
     <Compile Include="ViewModels\UserControls\PrinterTabViewModel.cs" />
     <Compile Include="ViewModels\UserControls\GeneralTabViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\UiEmailButtonTabViewModel.cs" />
     <Compile Include="Views\UserControls\AutosaveTab.xaml.cs">
       <DependentUpon>AutosaveTab.xaml</DependentUpon>
     </Compile>
@@ -224,6 +225,9 @@
     </Compile>
     <Compile Include="Views\UserControls\GeneralTab.xaml.cs">
       <DependentUpon>GeneralTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\UiEmailButtonTab.xaml.cs">
+      <DependentUpon>UiEmailButtonTab.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\PrinterTab.xaml.cs">
       <DependentUpon>PrinterTab.xaml</DependentUpon>
@@ -264,6 +268,7 @@
     <Compile Include="Workflow\ComWorkflow.cs" />
     <Compile Include="Workflow\ConversionWorkflow.cs" />
     <Compile Include="Workflow\InteractiveWorkflow.cs" />
+    <Compile Include="Workflow\UiEmailCommandExecutor.cs" />
     <Compile Include="JobInfoQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helper\SettingsHelper.cs" />
@@ -470,6 +475,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UserControls\GeneralTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\UiEmailButtonTab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -56,6 +56,16 @@
                 <userControls:GeneralTab x:Name="GeneralTabUserControl" />
             </TabItem>
 
+            <TabItem Template="{StaticResource FancyTabItem}" Name="UiEmailButtonTab"
+                     IsEnabled="{Binding UiEmailButtonTabIsEnabled}">
+                <TabItem.Header>
+                    <userControls1:TabHeaderControl x:Name="UiEmailButtonTabText" Text="UI Email Button">
+                        <ContentControl Content="{StaticResource GeneralSettings}" />
+                    </userControls1:TabHeaderControl>
+                </TabItem.Header>
+                <userControls:UiEmailButtonTab x:Name="UiEmailButtonTabUserControl" />
+            </TabItem>
+
             <TabItem Template="{StaticResource FancyTabItem}" Name="PrinterTab"
                      IsEnabled="{Binding PrinterTabIsEnabled}">
                 <TabItem.Header>

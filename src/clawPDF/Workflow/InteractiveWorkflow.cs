@@ -29,6 +29,8 @@ namespace clawSoft.clawPDF.Workflow
         private readonly Translator _translator = TranslationHelper.Instance.TranslatorInstance;
         protected readonly IDirectory DirectoryWrap;
         protected readonly IFile FileWrap;
+        private readonly UiEmailCommandExecutor _uiEmailCommandExecutor = new UiEmailCommandExecutor();
+        private bool _runUiEmailCommand;
 
         /// <summary>
         ///     Create a new Workflow object with the given job info
@@ -73,10 +75,23 @@ namespace clawSoft.clawPDF.Workflow
 
                 if (model.PrintJobAction == PrintJobAction.EMail)
                 {
+                    var uiEmailButtonSettings = Settings.ApplicationSettings.UiEmailButton ??
+                                                new UiEmailButtonSettings();
+
                     Job.SkipSaveFileDialog = true;
-                    Job.Profile.EmailClient.Enabled = true;
                     Job.Profile.AutoSave.Enabled = false;
                     Job.Profile.OpenViewer = false;
+
+                    if (uiEmailButtonSettings.Mode == UiEmailButtonMode.Command)
+                    {
+                        Job.Profile.EmailClient.Enabled = false;
+                        _runUiEmailCommand = true;
+                    }
+                    else
+                    {
+                        Job.Profile.EmailClient.Enabled = true;
+                        _runUiEmailCommand = false;
+                    }
                 }
             }
 
@@ -412,6 +427,26 @@ namespace clawSoft.clawPDF.Workflow
                 errorText);
 
             MessageWindow.ShowTopMost(opener, caption, MessageWindowButtons.OK, MessageWindowIcon.Error);
+        }
+
+        protected override bool PostConversion()
+        {
+            if (!_runUiEmailCommand)
+                return true;
+
+            var uiEmailButtonSettings = Settings.ApplicationSettings.UiEmailButton ?? new UiEmailButtonSettings();
+            var result = _uiEmailCommandExecutor.Execute(Job, uiEmailButtonSettings);
+
+            if (result.Success)
+                return true;
+
+            var caption = _translator.GetTranslation("InteractiveWorkflow", "Error", "Error");
+            var opener = _translator.GetTranslation("InteractiveWorkflow", "AnErrorOccured", "An error occured:");
+
+            MessageWindow.ShowTopMost(opener + "\r\n" + result.ErrorMessage, caption, MessageWindowButtons.OK,
+                MessageWindowIcon.Error);
+
+            return false;
         }
 
         protected override bool EvaluateActionResult(ActionResult actionResult)

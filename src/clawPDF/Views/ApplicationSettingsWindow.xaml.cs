@@ -23,6 +23,7 @@ namespace clawSoft.clawPDF.Views
             GeneralTabUserControl.ViewModel.ApplicationSettings = applicationSettings;
             GeneralTabUserControl.ViewModel.ApplicationProperties = applicationProperties;
             GeneralTabUserControl.PreviewLanguageAction = PreviewLanguageAction;
+            UiEmailButtonTabUserControl.ViewModel.ApplicationSettings = applicationSettings;
             TitleTabUserControl.ViewModel.ApplyTitleReplacements(applicationSettings.TitleReplacement);
             DebugTabUserControl.ViewModel.ApplicationSettings = applicationSettings;
             DebugTabUserControl.UpdateSettings = UpdateSettingsAction;
@@ -37,6 +38,7 @@ namespace clawSoft.clawPDF.Views
             GeneralTabUserControl.ViewModel.ApplicationSettings = settings.ApplicationSettings;
             GeneralTabUserControl.ViewModel.ApplicationProperties = settings.ApplicationProperties;
             TitleTabUserControl.ViewModel.ApplyTitleReplacements(settings.ApplicationSettings.TitleReplacement);
+            UiEmailButtonTabUserControl.ViewModel.ApplicationSettings = settings.ApplicationSettings;
             PrinterTabUserControl.ViewModel.ConversionProfiles = settings.ConversionProfiles;
             PrinterTabUserControl.ViewModel.ApplicationSettings = settings.ApplicationSettings;
         }
@@ -48,6 +50,7 @@ namespace clawSoft.clawPDF.Views
             PrinterTabUserControl.UpdateProfilesList();
             TranslationHelper.Instance.TranslatorInstance.Translate(TitleTabUserControl);
             TranslationHelper.Instance.TranslatorInstance.Translate(DebugTabUserControl);
+            TranslationHelper.Instance.TranslatorInstance.Translate(UiEmailButtonTabUserControl);
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)

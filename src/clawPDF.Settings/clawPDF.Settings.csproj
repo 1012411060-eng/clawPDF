@@ -97,6 +97,7 @@
     <Compile Include="Enums\Theme.cs" />
     <Compile Include="Enums\TiffColor.cs" />
     <Compile Include="Enums\UpdateInterval.cs" />
+    <Compile Include="Enums\UiEmailButtonMode.cs" />
     <Compile Include="Ftp.cs" />
     <Compile Include="Ghostscript.cs" />
     <Compile Include="JobPasswords.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaveDialog.cs" />
     <Compile Include="Scripting.cs" />
+    <Compile Include="UiEmailButtonSettings.cs" />
     <Compile Include="Security.cs" />
     <Compile Include="Signature.cs" />
     <Compile Include="Stamping.cs" />

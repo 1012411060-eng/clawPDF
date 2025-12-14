@@ -1,0 +1,78 @@
+<UserControl x:Class="clawSoft.clawPDF.Views.UserControls.UiEmailButtonTab"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModels="clr-namespace:clawSoft.clawPDF.ViewModels.UserControls"
+             mc:Ignorable="d"
+             x:Name="This"
+             x:ClassModifier="internal">
+    <UserControl.DataContext>
+        <viewModels:UiEmailButtonTabViewModel />
+    </UserControl.DataContext>
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
+    <StackPanel>
+        <HeaderedContentControl Template="{StaticResource HeaderPanelTemplate}" Header="UI Email Button">
+            <StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <RadioButton GroupName="UiEmailButtonMode" IsChecked="{Binding IsDefaultMode}">
+                        <TextBlock Name="UiEmailModeDefaultText" TextWrapping="Wrap">Default - launch email client</TextBlock>
+                    </RadioButton>
+
+                    <RadioButton GroupName="UiEmailButtonMode" IsChecked="{Binding IsCommandMode}"
+                                 Margin="0 5 0 0">
+                        <TextBlock Name="UiEmailModeCommandText" TextWrapping="Wrap">Command - run external command</TextBlock>
+                    </RadioButton>
+                </StackPanel>
+
+                <StackPanel Margin="20 10 0 0"
+                            Visibility="{Binding CommandSectionVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Label>
+                        <TextBlock Name="CommandPathLabel" TextWrapping="Wrap">Executable:</TextBlock>
+                    </Label>
+                    <DockPanel>
+                        <Button DockPanel.Dock="Right" Click="BrowseCommandButton_OnClick" MinWidth="25" Margin="5 0 0 0"
+                                Height="24">...</Button>
+                        <TextBox Name="CommandPathTextBox" Height="24"
+                                 Text="{Binding ApplicationSettings.UiEmailButton.CommandPath, UpdateSourceTrigger=PropertyChanged}"
+                                 Foreground="{StaticResource ControlDefaultForeground}"
+                                 Background="{StaticResource ContainerBackground}" />
+                    </DockPanel>
+                    <DockPanel Margin="15 5 0 0" LastChildFill="True">
+                        <Label>
+                            <TextBlock Name="CommandPathTokenLabel">Add Token:</TextBlock>
+                        </Label>
+                        <ComboBox Name="CommandPathTokenComboBox" Margin="5 0 0 0" VerticalAlignment="Center"
+                                  ItemsSource="{Binding ElementName=This, Path=ViewModel.Tokens}"
+                                  SelectionChanged="CommandPathTokenComboBox_OnSelectionChanged" />
+                    </DockPanel>
+
+                    <Label Margin="0 10 0 0">
+                        <TextBlock Name="CommandArgumentsLabel" TextWrapping="Wrap">Arguments:</TextBlock>
+                    </Label>
+                    <TextBox Name="CommandArgumentsTextBox" Height="60" TextWrapping="Wrap" AcceptsReturn="True"
+                             Text="{Binding ApplicationSettings.UiEmailButton.CommandArguments, UpdateSourceTrigger=PropertyChanged}"
+                             Foreground="{StaticResource ControlDefaultForeground}"
+                             Background="{StaticResource ContainerBackground}" />
+                    <DockPanel Margin="15 5 0 0" LastChildFill="True">
+                        <Label>
+                            <TextBlock Name="CommandArgumentsTokenLabel">Add Token:</TextBlock>
+                        </Label>
+                        <ComboBox Name="CommandArgumentsTokenComboBox" Margin="5 0 0 0" VerticalAlignment="Center"
+                                  ItemsSource="{Binding ElementName=This, Path=ViewModel.Tokens}"
+                                  SelectionChanged="CommandArgumentsTokenComboBox_OnSelectionChanged" />
+                    </DockPanel>
+
+                    <CheckBox IsChecked="{Binding ApplicationSettings.UiEmailButton.WaitForExit}" Margin="0 10 0 0">
+                        <TextBlock Name="WaitForExitCheckBox" TextWrapping="Wrap">Wait for command to complete</TextBlock>
+                    </CheckBox>
+                    <CheckBox IsChecked="{Binding ApplicationSettings.UiEmailButton.HideWindow}" Margin="0 5 0 0">
+                        <TextBlock Name="HideWindowCheckBox" TextWrapping="Wrap">Hide command window</TextBlock>
+                    </CheckBox>
+                </StackPanel>
+            </StackPanel>
+        </HeaderedContentControl>
+    </StackPanel>
+</UserControl>

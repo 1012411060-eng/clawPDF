@@ -175,7 +175,22 @@ namespace clawSoft.clawPDF.Workflow
 
             Job.RunJob();
 
-            if (!Job.Success) NotifyUserAboutFailedJob();
+            if (Job.Success)
+            {
+                try
+                {
+                    if (!PostConversion())
+                        Logger.Warn("Post conversion handling reported a failure.");
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error(ex, "Post conversion handling failed.");
+                }
+            }
+            else
+            {
+                NotifyUserAboutFailedJob();
+            }
 
             WorkflowStep = WorkflowStep.Finished;
             OnJobFinished(EventArgs.Empty);
@@ -291,5 +306,10 @@ namespace clawSoft.clawPDF.Workflow
         protected abstract bool EvaluateActionResult(ActionResult actionResult);
 
         protected abstract void RetypeSmtpPassword(object sender, QueryPasswordEventArgs e);
+
+        protected virtual bool PostConversion()
+        {
+            return true;
+        }
     }
 }
