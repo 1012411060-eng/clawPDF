@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net462;net8.0</TargetFrameworks>
+    <IsTestProject>true</IsTestProject>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Compile the real settings sources against the shipped serializer. No mocks. -->
+    <Compile Include="../../src/clawPDF.Settings/**/*.cs"
+             Exclude="../../src/clawPDF.Settings/Properties/AssemblyInfo.cs;../../src/clawPDF.Settings/obj/**/*.cs;../../src/clawPDF.Settings/bin/**/*.cs"
+             Link="Settings/%(RecursiveDir)%(Filename)%(Extension)" />
+    <Reference Include="DataStorage">
+      <HintPath>../../src/lib/DataStorage.dll</HintPath>
+    </Reference>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="NUnit" Version="3.14.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net462'">
+    <Reference Include="System.Drawing" />
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+  </ItemGroup>
+</Project>
