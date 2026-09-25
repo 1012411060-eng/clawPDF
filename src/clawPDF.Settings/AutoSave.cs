@@ -60,7 +60,7 @@ namespace clawSoft.clawPDF.Core.Settings
 
             try
             {
-                TargetDirectory = Data.UnescapeString(data.GetValue(@"" + path + @"TargetDirectory"));
+                TargetDirectory = ReadTargetDirectory(data.GetValue(@"" + path + @"TargetDirectory"));
             }
             catch
             {
@@ -117,6 +117,32 @@ namespace clawSoft.clawPDF.Core.Settings
 
         // Custom Code starts here
         // START_CUSTOM_SECTION:GENERAL
+        private static string ReadTargetDirectory(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+                return "";
+
+            // External applications can write native absolute Windows paths. Detect
+            // these before Regex.Unescape can turn path segments into e.g. \n or \t.
+            var isDriveLetter = (value[0] >= 'A' && value[0] <= 'Z')
+                                || (value[0] >= 'a' && value[0] <= 'z');
+            if (isDriveLetter && value.Length >= 3 && value[1] == ':' && value[2] == '\\'
+                && (value.Length == 3 || value[3] != '\\'))
+                return value;
+
+            // A native UNC path starts with two backslashes and has a single
+            // server/share separator. Requiring that separator also preserves
+            // serialized root-relative paths such as \\folder\\subfolder.
+            if (value.Length > 2 && value[0] == '\\' && value[1] == '\\' && value[2] != '\\')
+            {
+                var separator = value.IndexOf('\\', 2);
+                if (separator > 2 && separator + 1 < value.Length && value[separator + 1] != '\\')
+                    return value;
+            }
+
+            // Keep the existing decoding rules for clawPDF-serialized values.
+            return Data.UnescapeString(value);
+        }
         // END_CUSTOM_SECTION:GENERAL
         // Custom Code ends here. Do not edit below
     }
