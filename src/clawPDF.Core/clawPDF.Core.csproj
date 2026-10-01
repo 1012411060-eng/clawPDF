@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>clawSoft.clawPDF.Core</RootNamespace>
     <AssemblyName>clawPDF.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -87,6 +87,7 @@
       <DependentUpon>CoreResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Ghostscript\GhostscriptCall.cs" />
+    <Compile Include="Ghostscript\PreviewRenderer.cs" />
     <Compile Include="Ghostscript\GhostscriptAPI.cs" />
     <Compile Include="Ghostscript\OutputDevices\OCRDevice.cs" />
     <Compile Include="Ghostscript\OutputDevices\DocxDevice.cs" />

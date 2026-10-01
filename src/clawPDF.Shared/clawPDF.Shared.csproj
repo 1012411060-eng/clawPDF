@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>clawSoft.clawPDF.Shared</RootNamespace>
     <AssemblyName>clawPDF.Shared</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -108,6 +108,7 @@
     <Compile Include="Helper\PrinterHelper.cs" />
     <Compile Include="Helper\TopMostHelper.cs" />
     <Compile Include="Helper\TranslationHelper.cs" />
+    <Compile Include="Helper\WindowPlacementHelper.cs" />
     <Compile Include="Assistants\UacAssistant.cs" />
     <Compile Include="Helper\VersionHelper.cs" />
     <Compile Include="Helper\TerminalServerDetection.cs" />
