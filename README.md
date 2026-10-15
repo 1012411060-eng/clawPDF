@@ -153,7 +153,3 @@ clawPDF.exe /ManagePrintJobs
 - Appbar_page_file_pdf (http://modernuiicons.com/), licensed under Attribution-NoDerivs 3.0 Unported.
 
 
-# License
-
-clawPDF is licensed under AGPL v3 license<br>
-Copyright (C) 2023 // Andrew Hess // clawSoft
